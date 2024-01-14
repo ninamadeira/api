@@ -8,6 +8,7 @@ import br.com.madeira.api.services.exceptions.DataIntegratyViolationException;
 import br.com.madeira.api.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
-
+    @Cacheable("usuarios")
     public List<User> findAll() {
         return repository.findAll();
     }
